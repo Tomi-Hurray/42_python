@@ -14,4 +14,4 @@ def test_temperature(temp_str: str) -> None:
 
 
 if __name__ == "__main__":
-    test_temperature("25")
+    test_temperature("25.6")
