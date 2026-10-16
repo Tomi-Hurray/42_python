@@ -35,7 +35,7 @@ def check_virtual_env():
               "Safe to install reagents without affecting\n"
               "the global system.\n")
         print("Reagent installation path:")
-        print(site.USER_SITE)
+        print(site.getsitepackages())
 
 
 if __name__ == "__main__":
