@@ -3,7 +3,7 @@ import sys
 import site
 
 
-def check_virtual_env():
+def check_virtual_env() -> None:
     is_venv = False
 
     if hasattr(sys, 'real_prefix') or (hasattr(sys, 'base_prefix')
