@@ -1,7 +1,9 @@
 import os
 
 try:
-    from dotenv import load_dotenv
+    from importlib import import_module
+
+    load_dotenv = getattr(import_module("dotenv"), "load_dotenv")
     load_dotenv()
     HAS_DOTENV = True
 except ImportError:

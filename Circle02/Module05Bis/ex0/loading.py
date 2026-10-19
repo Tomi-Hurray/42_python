@@ -22,12 +22,12 @@ if __name__ == "__main__":
     print("REAGENT STATUS: Loading reagents...\n")
     print("Checking dependencies:\n")
     if check_pandas():
-        print(f"[OK] pandas ({version("pandas")}) - Data manipulation ready")
+        print(f"[OK] pandas ({version('pandas')}) - Data manipulation ready")
     else:
         print("[TIP] pip install pandas")
 
     if check_numpy():
-        print(f"[OK] numpy ({version("numpy")}) -  Numerical \
+        print(f"[OK] numpy ({version('numpy')}) -  Numerical \
 computation ready\n")
     else:
         print("[TIP] pip install numpy\n")
