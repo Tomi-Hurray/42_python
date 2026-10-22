@@ -65,8 +65,25 @@ if __name__ == "__main__":
     print(f"Log Level: {log_level}")
     print(f"Remote Network: {network_status}")
 
-    print("Configuration security check:")
-    print("[OK] No hardcoded secrets detected")
-    print("[OK] .env file properly ignored by git")
-    print("[OK] Production overrides available")
-    print("Oracle sees all configuration")
+     # Check that the API key is not the development placeholder
+    if api_key != "mock-dev-key":
+        print("[OK] API key is not the development placeholder")
+    else:
+        print("[WARNING] Using the development API key placeholder")
+
+    # Check for a literal .env entry in .gitignore
+    gitignore_path = "ex1/.gitignore"
+    env_ignored = False
+    if os.path.isfile(gitignore_path):
+        with open(gitignore_path, "r", encoding="utf-8") as gitignore:
+            lines = gitignore.readlines()
+            print(lines)
+            env_ignored = any(line.strip() == ".env" for line in lines)
+
+    print(env_ignored)
+    if env_ignored:
+        print("[OK] .env is listed in .gitignore")
+    else:
+        print("[WARNING] .env is not listed in .gitignore")
+    if not HAS_DOTENV:
+        print("[WARNING] python-dotenv is not installed; .env was not loaded")
