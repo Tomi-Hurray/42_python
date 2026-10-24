@@ -1,5 +1,9 @@
-from datetime import datetime
-from pydantic import BaseModel, Field
+try:
+    from datetime import datetime
+    from pydantic import BaseModel, Field
+except ImportError as e:
+    print("Required modules are not installed. Please install pydantic.")
+    raise e
 
 
 class SpaceStation(BaseModel):
@@ -13,7 +17,7 @@ class SpaceStation(BaseModel):
     notes: str | None = Field(default=None, max_length=200)
 
 
-def main():
+def main() -> None:
     # Example usage of the SpaceStation class
     station = SpaceStation(
         station_id="ISS",
@@ -36,18 +40,25 @@ def main():
     print("=" * 30)
     print("Attempting to create an invalid station...\n")
 
-    invalid_station = {
-        "station_id": "",
-        "name": "A" * 51,  # Exceeds max length
-        "crew_size": 0,  # Below min value
-        "power_level": 150.0,  # Exceeds max value
-        "oxygen_level": -10.0,  # Below min value
-        "last_maintenance": "2024-01-01T00:00:00",
-        "is_operational": True,
-        "notes": "This note is way too long." * 20  # Exceeds max length
-    }
     try:
-        SpaceStation(**invalid_station)
+        invalid_station = SpaceStation(
+            station_id="",
+            name="A" * 51,  # Exceeds max length
+            crew_size=0,  # Below min value
+            power_level=150.0,  # Exceeds max value
+            oxygen_level=-10.0,  # Below min value
+            last_maintenance=datetime.now(),
+            is_operational=True,
+            notes="This note is way too long." * 20  # Exceeds max length
+        )
+        print("Invalid station created (this should not happen):")
+        print("ID:", invalid_station.station_id)
+        print("Name:", invalid_station.name)
+        print("Crew Size:", invalid_station.crew_size, "people")
+        print("Power Level:", invalid_station.power_level, "%")
+        print("Oxygen Level:", invalid_station.oxygen_level, "%")
+        print("Status:", "Operational" if invalid_station.is_operational else
+              "Not Operational")
     except Exception as e:
         print("Validation error:", e)
 
